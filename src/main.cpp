@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
   if (emissionTarget == EmitLLVMBC) {
       // Write LLVM bitcode to disk.
       EmitLLVMBitCode(module);
-      printf("LLVM bitcode written to ./model.bc");
+      printf("LLVM bitcode written to ./model.bc\n");
   } else
     module->dump();
 
