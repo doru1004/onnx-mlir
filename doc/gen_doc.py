@@ -36,6 +36,7 @@ special_op_handler = dict([
     ("MaxPool", "ImportNodeMaxPool"),
     ("BatchNormalization", "ImportNodeBatchNormalization"),
     ("Pad", "ImportNodePad"),
+    ("Reshape", "ImportNodeReshape"),
     #("Transpose", "ImportNodeTranspose")
 ])
 
@@ -46,7 +47,7 @@ OpsWithShapeInference = [
     'LeakyRelu', 'Elu', 'Selu', 'HardSigmoid', 'Reshape', 'Reciprocal',
     'Identity', 'Cos', 'Log', 'Transpose', 'Softmax', 'ReduceMax', 'ReduceMin',
     'ReduceProd', 'ReduceSum', 'Softplus', 'Softsign', 'Sqrt', 'Unsqueeze',
-    'Sign'
+    'Sign', 'Constant'
 ]
 
 # Operations supporting canonicalization.
