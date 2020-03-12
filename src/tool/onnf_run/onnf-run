@@ -1,18 +1,21 @@
 #!/usr/bin/python
 
 import argparse
+from driver import *
 
-parser = argparse.ArgumentParser(
+def parse_arguments():
+  parser = argparse.ArgumentParser(
     prog='onnf-run',
     description="""
-         ONNF Module Executor
+         ONNX-MLIR Model Executor
     """)
+  parser.add_argument('--compile',
+    help='Compile model to produce a shared library file.')
+  parser.add_argument('model',
+    help='The ONNX model being compiled and/or run.')
+  args = parser.parse_args()
 
-parser.add_argument('--compile',
-                    help='Compile model to produce a shared library file.')
+  print(args.model)
 
-parser.add_argument('module',
-                    help='The ONNX module being compiled or run.')
-
-parser.parse_args()
-
+if __name__ == '__main__':
+  parse_arguments()
