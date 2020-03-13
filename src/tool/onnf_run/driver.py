@@ -21,12 +21,14 @@ sys.path.append(RUNTIME_DIR)
 def execute_command(cmd):
     if (VERBOSE):
         print(" ".join(cmd))
-    subprocess.run(cmd, stdout=subprocess.PIPE)
+    subprocess.call(cmd, stdout=subprocess.PIPE)
 
 def compile(inputModelPath):
     execute_command([ONNF, inputModelPath])
+
     # Call llc to generate object file from bitcode.
     FilePath = os.path.splitext(inputModelPath)[0]
+
     execute_command(
         [LLC, "-filetype=obj", "-relocation-model=pic", FilePath + ".bc"])
     # Generate shared library from object file, linking with c runtime.

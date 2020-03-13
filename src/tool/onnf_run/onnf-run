@@ -11,7 +11,7 @@ def parse_arguments():
     """)
   parser.add_argument('model',
     help="""The ONNX model being compiled and/or run.""")
-  parser.add_argument('--mode', choices=["compile", "run", "all"]
+  parser.add_argument('--mode', choices=["compile", "run", "all"],
     help="""Mode that specifies what the onnf-run tool does.
             Possible values include:
                compile : compile the input model to a shared library (only).
@@ -23,9 +23,11 @@ def parse_arguments():
   print(args.model)
   return args
 
-def action_arguments(args):
-  if (args.mode == "compile")
-
+def run_command(args):
+  print(args.mode)
+  if (args.mode == "compile"):
+    compile(args.model)
 
 if __name__ == '__main__':
   args = parse_arguments()
+  run_command(args)

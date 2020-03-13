@@ -60,9 +60,9 @@ void LoadMLIR(string inputFilename, mlir::MLIRContext &context,
   }
 }
 
-void EmitLLVMBitCode(const mlir::OwningModuleRef &module) {
+void EmitLLVMBitCode(string outputName, const mlir::OwningModuleRef &module) {
   error_code error;
-  llvm::raw_fd_ostream moduleBitcodeStream("model.bc", error,
+  llvm::raw_fd_ostream moduleBitcodeStream(outputName, error,
                                            llvm::sys::fs::F_None);
   llvm::WriteBitcodeToFile(*mlir::translateModuleToLLVMIR(*module),
                            moduleBitcodeStream);
@@ -149,8 +149,10 @@ int main(int argc, char *argv[]) {
 
   if (emissionTarget == EmitLLVMBC) {
       // Write LLVM bitcode to disk.
-      EmitLLVMBitCode(module);
-      printf("LLVM bitcode written to ./model.bc\n");
+      string outputName =
+        inputFilename.substr(0, inputFilename.find_last_of(".")) + ".bc";
+      EmitLLVMBitCode(outputName, module);
+      printf("LLVM bitcode written to %s\n", outputName.c_str());
   } else
     module->dump();
 
