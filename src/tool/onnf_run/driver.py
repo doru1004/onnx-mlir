@@ -6,16 +6,16 @@ from __future__ import unicode_literals
 import os
 import sys
 import subprocess
-import driver_config
+import python.driver_config
 
 VERBOSE = 1 #bool(os.environ.get("VERBOSE"))
 
-CXX = test_config.CXX_PATH
-ONNF = os.path.join(test_config.ONNF_BUILD_PATH, "bin/onnf")
-LLC = os.path.join(test_config.LLVM_PROJ_BUILD_PATH, "bin/llc")
+CXX = python.driver_config.CXX_PATH
+ONNF = os.path.join(python.driver_config.ONNF_BUILD_PATH, "bin/onnf")
+LLC = os.path.join(python.driver_config.LLVM_PROJ_BUILD_PATH, "bin/llc")
 
 # Make lib folder under build directory visible in PYTHONPATH
-RUNTIME_DIR = os.path.join(test_config.ONNF_BUILD_PATH, "lib")
+RUNTIME_DIR = os.path.join(python.driver_config.ONNF_BUILD_PATH, "lib")
 sys.path.append(RUNTIME_DIR)
 
 def execute_command(cmd):
