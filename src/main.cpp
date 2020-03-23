@@ -16,10 +16,10 @@
 #include "llvm/Support/Regex.h"
 #include "llvm/Support/SourceMgr.h"
 
-#include "src/builder/frontend_dialect_transformer.hpp"
-#include "src/dialect/krnl/krnl_ops.hpp"
-#include "src/dialect/onnx/onnx_ops.hpp"
-#include "src/pass/passes.hpp"
+#include "src/Builder/FrontendDialectTransformer.hpp"
+#include "src/Dialect/Krnl/KrnlOps.hpp"
+#include "src/Dialect/ONNX/ONNXOps.hpp"
+#include "src/Pass/Passes.hpp"
 
 #include "mlir/Conversion/LoopToStandard/ConvertLoopToStandard.h"
 #include "mlir/ExecutionEngine/ExecutionEngine.h"
@@ -36,11 +36,11 @@
 void EmitLLVMBitCode(const mlir::OwningModuleRef &module);
 
 using namespace std;
-using namespace onnf;
+using namespace onnx_mlir;
 
 void LoadMLIR(string inputFilename, mlir::MLIRContext &context,
               mlir::OwningModuleRef &module) {
-  // Handle '.mlir' input to the ONNF frontend.
+  // Handle '.mlir' input to the ONNX MLIR frontend.
   // The mlir format indicates that one or more of the supported
   // representations are used in the file.
   llvm::ErrorOr<std::unique_ptr<llvm::MemoryBuffer>> fileOrErr =
@@ -77,11 +77,11 @@ int main(int argc, char *argv[]) {
   mlir::registerDialect<mlir::ONNXOpsDialect>();
   mlir::registerDialect<mlir::KrnlOpsDialect>();
 
-  llvm::cl::OptionCategory OnnfOptions("ONNF Options",
+  llvm::cl::OptionCategory OnnxMlirOptions("ONNX MLIR Options",
                                        "These are frontend options.");
   llvm::cl::opt<string> inputFilename(
       llvm::cl::Positional, llvm::cl::desc("<input file>"), llvm::cl::init("-"),
-      llvm::cl::cat(OnnfOptions));
+      llvm::cl::cat(OnnxMlirOptions));
 
   enum EmissionTargetType {
     EmitONNXIR,
@@ -99,11 +99,11 @@ int main(int argc, char *argv[]) {
           clEnumVal(EmitLLVMIR, "Lower model to LLVM IR (LLVM dialect)."),
           clEnumVal(EmitLLVMBC, "Lower model to LLVM IR and emit (to file) "
                                 "LLVM bitcode for model.")),
-      llvm::cl::init(EmitLLVMBC), llvm::cl::cat(OnnfOptions));
+      llvm::cl::init(EmitLLVMBC), llvm::cl::cat(OnnxMlirOptions));
 
-  llvm::cl::HideUnrelatedOptions(OnnfOptions);
+  llvm::cl::HideUnrelatedOptions(OnnxMlirOptions);
   llvm::cl::ParseCommandLineOptions(argc, argv,
-                                    "ONNF MLIR modular optimizer driver\n");
+                                    "ONNX MLIR modular optimizer driver\n");
 
   // Decide if the input file is an ONNX model or a model specified
   // in MLIR. The extension of the file is the decider.
@@ -126,6 +126,7 @@ int main(int argc, char *argv[]) {
   pm.addPass(mlir::createShapeInferencePass());
   pm.addPass(mlir::createCanonicalizerPass());
   pm.addPass(mlir::createShapeInferencePass());
+  pm.addPass(mlir::createAttributePromotionPass());
 
   if (emissionTarget >= EmitMLIR) {
     pm.addPass(mlir::createLowerToKrnlPass());

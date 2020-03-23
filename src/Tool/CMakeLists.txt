@@ -1,0 +1,2 @@
+add_subdirectory(ONNXMLIROpt)
+add_subdirectory(ONNXMLIRRun)
