@@ -1032,7 +1032,7 @@ bool ONNXReshapeOp::inferShapes() {
 bool ONNXTransposeOp::inferShapes() {
   // Cannot infer shape if no shape exists.
   if (!data().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXTransposeOp: Input tensor not ranked");
     return false;
   }
 
@@ -1061,7 +1061,7 @@ bool ONNXTransposeOp::inferShapes() {
 
 bool ONNXReduceMaxOp::inferShapes() {
   if (!getOperand().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXReduceMaxOp: Input tensor not ranked");
     return false;
   }
 
@@ -1076,7 +1076,7 @@ bool ONNXReduceMaxOp::inferShapes() {
 
 bool ONNXReduceMinOp::inferShapes() {
   if (!getOperand().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXReduceMinOp: Input tensor not ranked");
     return false;
   }
 
@@ -1091,7 +1091,7 @@ bool ONNXReduceMinOp::inferShapes() {
 
 bool ONNXReduceProdOp::inferShapes() {
   if (!getOperand().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXReduceProdOp: Input tensor not ranked");
     return false;
   }
 
@@ -1106,7 +1106,7 @@ bool ONNXReduceProdOp::inferShapes() {
 
 bool ONNXReduceSumOp::inferShapes() {
   if (!getOperand().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXReduceSumOp: Input tensor not ranked");
     return false;
   }
 
@@ -1140,7 +1140,7 @@ bool ONNXConvOp::inferShapes() {
   if (!X().getType().isa<RankedTensorType>() ||
       !W().getType().isa<RankedTensorType>() ||
       (hasBias && !B().getType().isa<RankedTensorType>())) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXConvOp: Input tensor not ranked ");
     return false;
   }
 
@@ -1255,7 +1255,7 @@ bool ONNXConvOp::inferShapes() {
 bool ONNXAveragePoolOp::inferShapes() {
   // Cannot infer shape if no shape exists.
   if (!X().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXAveragePoolOp: Input tensor not ranked");
     return false;
   }
 
@@ -1302,7 +1302,7 @@ bool ONNXAveragePoolOp::inferShapes() {
 bool ONNXMaxPoolSingleOutOp::inferShapes() {
   // Cannot infer shape if no shape exists.
   if (!X().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXMaxPoolSingleOutOp: Input tensor not ranked");
     return false;
   }
 
@@ -1413,7 +1413,7 @@ void ONNXPadConstantValuePadOp::build(Builder *builder, OperationState &state,
 
 bool ONNXUnsqueezeOp::inferShapes() {
   if (!data().getType().isa<RankedTensorType>()) {
-    emitError("Input tensor not ranked");
+    emitError("ONNXUnsqueezeOp: Input tensor not ranked");
     return false;
   }
 

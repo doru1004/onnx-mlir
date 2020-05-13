@@ -77,9 +77,21 @@ private:
     case onnx::TensorProto_DataType::TensorProto_DataType_BOOL:
       return builder_.getI1Type();
     case onnx::TensorProto_DataType::TensorProto_DataType_STRING:
+      printf("onnx::TensorProto_DataType::TensorProto_DataType_STRING\n");
+      assert(false && "Unsupported data type encountered.");
+      return nullptr;
     case onnx::TensorProto_DataType::TensorProto_DataType_COMPLEX64:
+      printf("onnx::TensorProto_DataType::TensorProto_DataType_COMPLEX64\n");
+      assert(false && "Unsupported data type encountered.");
+      return nullptr;
     case onnx::TensorProto_DataType::TensorProto_DataType_COMPLEX128:
+      printf("onnx::TensorProto_DataType::TensorProto_DataType_COMPLEX128\n");
+      assert(false && "Unsupported data type encountered.");
+      return nullptr;
     case onnx::TensorProto_DataType::TensorProto_DataType_UNDEFINED:
+      printf("onnx::TensorProto_DataType::TensorProto_DataType_UNDEFINED\n");
+      assert(false && "Unsupported data type encountered.");
+      return nullptr;
     default:
       assert(false && "Unsupported data type encountered.");
       return nullptr;
